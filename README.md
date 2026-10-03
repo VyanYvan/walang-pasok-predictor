@@ -71,10 +71,10 @@ Limitations: border lengths are approximate, and the 2023 boundary data may not 
 
 ## Team
 
-- [Member 1]
-- [Member 2]
-- [Member 3]
-- [Member 4]
-- [Member 5]
+- Arevalo, Miguel Isaac
+- Austria, Marcus Yvan
+- Billate, Rhown Leupert
+- Dueda, Anjoe Carlo
+- Nour, Sabir
 
 *School project for an Artificial Intelligence course. Always follow official announcements from PAGASA, DepEd, CHED, and your LGU.*
