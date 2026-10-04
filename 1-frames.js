@@ -3,6 +3,7 @@
 // A frame is like a profile card. It has SLOTS (labels) and VALUES.
 // Every city in NCR gets its own card.
 // The weather slots start empty. The app fills them in when you click things.
+//migs was here, wrote this para makita ko na ung repo sa profile ko
 // ============================================================
 
 var CITY_FRAMES = {
