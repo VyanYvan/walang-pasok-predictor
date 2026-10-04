@@ -1,80 +1,53 @@
 # Walang Pasok Predictor (NCR)
 
-A knowledge-based / expert system that predicts class suspensions ("walang pasok") for the 17 LGUs of the National Capital Region. It gives a **certain answer** when an official rule applies, and a **capped likelihood** when the decision is left to the mayor.
+Our expert system guesses if there will be classes in the 17 cities of Metro Manila when there's a typhoon or heavy rain.
 
-![Yellow warning scenario](docs/screenshots/yellow-warning-neighbors.png)
+- If an **official rule** says no classes, it says **100% walang pasok**.
+- If it's up to the **mayor**, it gives a **percent guess** using the weather and what nearby cities already did.
 
-## Run it
+![Demo](screenshots/demo.png)
 
-No install needed. Open `index.html` in any browser.
+## How to open it
 
-To host it online for free: go to **Settings → Pages**, set the source to the `main` branch and `/ (root)`, then save. The site appears at `https://<username>.github.io/<repo-name>/`.
+Just open `index.html` in a browser. Or use our live site on GitHub Pages.
 
-## How to use
+## Which file does what
 
-1. Pick a school level: Kindergarten, Grades 1–10, Senior high (11–12), or College.
-2. Set the NCR-wide weather (signal, rainfall warning, habagat, continuing rain) and press **Apply to all 17 LGUs**, or load a sample scenario.
-3. Tap a city to set its local conditions: flood warning, reported flooding, or an existing announcement.
-4. Read the result, the step-by-step trace, and the Knowledge base tabs.
-
-## Knowledge representation
-
-| Technique | Where it is in the system |
+| File | What it is |
 | --- | --- |
-| Logical | Facts such as `signal(manila, 2).` and statements such as `suspended(C, L) ← signal(C, S) ∧ S ≥ 3.` (Logical tab) |
-| Frame | City frames (is_a, part_of, PSGC code, neighbors, conditions, conclusion) and warning frames (Frames tab) |
-| Network | 17 LGU nodes and 35 border edges weighted by shared border length (Show network button, Network tab) |
-| Procedural | Fixed 8-step reasoning procedure with a live trace (Procedural tab) |
-| Rule-based | IF–THEN rules R1–R6 (official), P1–P9 (prediction), D1–D3 (decision) with fired rules highlighted (Rules tab) |
+| `1-frames.js` | **Frames.** A "profile card" for each city (slots and values) and for each warning. |
+| `2-network.js` | **Network.** Which cities touch each other, and how long the border is. |
+| `3-logic.js` | **Logic.** True/false statements and the facts we know. |
+| `4-rules.js` | **Rules.** All the IF-THEN rules. |
+| `5-procedure.js` | **Procedure.** The step-by-step thinking, like a recipe. |
+| `app.js` | The buttons, map colors, and showing the results. |
+| `map-data.js` | The city shapes for drawing the map (made by computer, don't edit). |
+| `index.html` | The page. |
+| `style.css` | The colors and layout. |
 
-## Rules summary
+## How it thinks (short version)
 
-**Official rules (certain answer, chain stops):**
+1. Read the weather for the city.
+2. Check the official rules (R1 to R6). If one is true, answer is 100%. Stop.
+3. If not, add points: the biggest weather rule (P1 to P5), then flooding, habagat and continuing rain (P6 to P8).
+4. Look at the neighbors. The more of the border touches cities with no classes, the more points (P9, up to 30).
+5. Max is 95%, because only the mayor can make it official.
+6. 70% and up = likely walang pasok. 40 to 69% = maybe. Below 40% = likely may pasok.
 
-- R1: Signal No. 3–5 → all levels suspended
-- R2: Signal No. 2 → Kindergarten to Grade 10
-- R3: Signal No. 1 → Kindergarten
-- R4: Orange or Red rainfall warning → Kindergarten to Grade 12
-- R5: Critical flood warning → Kindergarten to Grade 12
-- R6: Mayor already announced → suspended
-
-**Prediction rules (group heuristics, used only when no official rule fires):** the strongest of P1–P5 (Yellow +35, Signal 1 non-kinder +30, Signal 2 senior high +50, Signal 2 college +40, Orange/Red/flood warning college +50), plus P6 flooding reported +25, P7 habagat +10, P8 continuing rain +10, and P9 neighbors up to +30:
-
-```
-P9 = round(30 × border km shared with suspended neighbors ÷ total border km with NCR neighbors)
-```
-
-The score is capped at 95%. D1: 70 and up = likely walang pasok. D2: 40–69 = possible. D3: under 40 = likely may pasok. P9 only counts neighbors suspended by an official rule, so cities cannot raise each other's scores in a loop.
-
-The prediction weights and thresholds are the group's own design and are not official.
-
-## Project structure
-
-```
-index.html                 the complete app (open this)
-data/ncr-geo.json          map paths, label points, adjacency edges
-scripts/app_template.html  app source with a __GEO__ placeholder
-scripts/build_app.py       injects the data into the template → index.html
-scripts/build_geo.py       rebuilds ncr-geo.json from the boundary dataset
-docs/screenshots/          demo screenshots
-```
+The points (P rules) and the 70/40 cutoffs are our own idea, not official.
 
 ## Sources
 
-1. DepEd Order No. 022, s. 2024 — Revised Guidelines on Class and Work Suspension in Schools During Disasters and Emergencies
+1. DepEd Order No. 022, s. 2024 (class suspension rules)
 2. Executive Order No. 66, s. 2012 — https://www.lawphil.net/executive/execord/eo2012/eo_66_2012.html
-3. CHED statement on cancellation of classes in HEIs (CMO No. 15, s. 2012) — https://legacy.ched.gov.ph/statement-on-the-cancellation-of-classes-in-public-and-private-higher-heis/
-4. PAGASA color-coded rainfall warnings (Yellow 7.5–15 mm/hr, Orange 15–30 mm/hr, Red over 30 mm/hr)
-5. Boundaries: faeldon/philippines-json-maps (2023, PSA/NAMRIA-based) — https://github.com/faeldon/philippines-json-maps
-
-Limitations: border lengths are approximate, and the 2023 boundary data may not fully reflect later changes to the Makati–Taguig boundary. Earthquakes, extreme heat, and power outages are out of scope.
+3. CHED statement on class cancellation (CMO No. 15, s. 2012) — https://legacy.ched.gov.ph/statement-on-the-cancellation-of-classes-in-public-and-private-higher-heis/
+4. PAGASA rainfall warnings: Yellow 7.5-15 mm/hr, Orange 15-30 mm/hr, Red over 30 mm/hr
+5. City map shapes: https://github.com/faeldon/philippines-json-maps (2023, based on PSA/NAMRIA). We measured the shared borders from these shapes.
 
 ## Team
 
-- Arevalo, Miguel Isaac
-- Austria, Marcus Yvan
-- Billate, Rhown Leupert
-- Dueda, Anjoe Carlo
-- Nour, Sabir
-
-*School project for an Artificial Intelligence course. Always follow official announcements from PAGASA, DepEd, CHED, and your LGU.*
+- [Member 1]
+- [Member 2]
+- [Member 3]
+- [Member 4]
+- [Member 5]
