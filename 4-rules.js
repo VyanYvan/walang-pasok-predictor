@@ -1,9 +1,9 @@
 // ============================================================
 // 4. RULE-BASED REPRESENTATION (IF ... THEN ...)
-// R rules = official rules from DepEd, the President (EO 66) and CHED.
-//           If one is true, the answer is 100% sure. Walang pasok!
-// P rules = our group's guessing rules. They add points.
-// D rules = turn the points into an answer.
+// R rules = official rules from DepEd, the President (EO 66) and CHED
+//           If one is true, the answer is 100% sure
+// P rules = prediction/guessing rules
+// D rules = decision rules based on total points gathered
 // ============================================================
 
 var RULE_LIST = [
