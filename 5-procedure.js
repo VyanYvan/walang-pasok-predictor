@@ -1,18 +1,16 @@
 // ============================================================
 // 5. PROCEDURAL REPRESENTATION
-// A procedure = steps done in order, like a recipe.
-// This is how the system THINKS about one city.
 // ============================================================
 
 function thinkAbout(cityName, level) {
   var city = CITY_FRAMES[cityName];
-  var steps = [];      // what we did, so we can show it
+  var steps = [];      // ano steps ginawa ni ai, so we can show it
   var rulesUsed = [];  // which rules were true
 
   // STEP 1: Read the facts
   steps.push("Read the facts: signal " + city.signal + ", " + city.rain + " rain, level is " + level + ".");
 
-  // STEP 2: Check the official rules. If one is true, we are sure. Stop here.
+  // STEP 2: Check the official rules, If one is true, we are sure, tigil na kase official rules are definitive, no compromise
   var officialRule = checkOfficialRules(city, level);
   if (officialRule != "") {
     rulesUsed.push(officialRule);
@@ -65,7 +63,7 @@ function thinkAbout(cityName, level) {
   // STEP 6: Never say more than 95%, because only the mayor can make it official
   if (points > 95) points = 95;
 
-  // STEP 7: Decide the answer
+  // STEP 7: Decide answer
   var result = decide(points);
   rulesUsed.push(result.id);
   steps.push("Total is " + points + "%. Rule " + result.id + " gives the answer.");
