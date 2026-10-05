@@ -1,9 +1,6 @@
 // ============================================================
 // 1. FRAME REPRESENTATION
-// A frame is like a profile card. It has SLOTS (labels) and VALUES.
-// Every city in NCR gets its own card.
-// The weather slots start empty. The app fills them in when you click things.
-//migs was here, wrote this para makita ko na ung repo sa profile ko
+// bale currently this is all just placeholders ready to hold data once user inputs data
 // ============================================================
 
 var CITY_FRAMES = {
@@ -36,7 +33,7 @@ var WARNING_FRAMES = {
   "Red rain":       { isA: "Rainfall warning", rainPerHour: "more than 30 mm", autoNoClass: "Kinder to Grade 12" }
 };
 
-// Small helper: put all cities back to no weather
+// helper func to reset everything back to no data
 function resetAllCities() {
   for (var name in CITY_FRAMES) {
     var city = CITY_FRAMES[name];
