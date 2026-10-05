@@ -1,9 +1,8 @@
 // ============================================================
-// APP: the buttons, the map colors, and showing results.
-// The "thinking" is in the other files. This file just shows it.
+// mainly just interactivity here plus some var handling
 // ============================================================
 
-// Things the user picked
+// user inputs/interaction
 var selectedLevel = "Grade 1-10";
 var selectedCity = "Manila";
 var habagat = false;
@@ -11,7 +10,7 @@ var rainContinues = false;
 var showNetwork = false;
 var currentTab = "frames";
 
-// What each answer looks like
+// prediction answer colors
 var ANSWERS = {
   auto:      { color: "#c9302c", text: "Walang pasok (official rule)" },
   announced: { color: "#7b52d3", text: "Walang pasok (announced)" },
@@ -33,7 +32,7 @@ function drawMap() {
     if (p.name != "") svg += '<text class="province-name" x="' + p.labelX + '" y="' + p.labelY + '">' + p.name + '</text>';
   }
 
-  // the 17 cities, colored by their answer
+  // goes through each of the 17 cities with their color
   for (var name in CITY_SHAPES) {
     var result = thinkAbout(name, selectedLevel);
     var color = ANSWERS[result.answer].color;
@@ -55,7 +54,7 @@ function drawMap() {
     }
   }
 
-  // city names on top
+  // city names that shows on top
   for (var name in CITY_SHAPES) {
     var c = CITY_SHAPES[name];
     svg += '<text class="city-name" x="' + c.labelX + '" y="' + (c.labelY + 4) + '">' + name.toUpperCase() + '</text>';
@@ -69,6 +68,7 @@ function drawMap() {
   map.innerHTML = svg;
 }
 
+// legend, what else
 function drawLegend() {
   var html = "<b>" + selectedLevel + "</b>";
   for (var key in ANSWERS) {
@@ -105,7 +105,7 @@ function fillCityBox() {
   document.getElementById("cityAnnounced").checked = city.announced;
 }
 
-// ---------- The 5 tabs ----------
+// this opens whichever tab user clicks on, bunch of if statements
 function openTab(name) {
   currentTab = name;
   var html = "";
@@ -172,6 +172,7 @@ function openTab(name) {
 }
 
 // ---------- Update everything ----------
+// pretty much is called every update of the selection or data
 function updateAll() {
   drawMap();
   drawLegend();
@@ -224,7 +225,7 @@ function toggleNetwork() {
   drawMap();
 }
 
-// Ready-made examples for the demo
+// SAMPLE DATA PARA SA DEMO para instant na
 function sample(which) {
   resetAllCities();
   habagat = false;
