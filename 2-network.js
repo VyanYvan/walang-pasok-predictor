@@ -1,10 +1,7 @@
 // ============================================================
 // 2. NETWORK REPRESENTATION
-// Think of it like a connect-the-dots picture.
-// Each city is a DOT (node).
-// A LINE (edge) connects two cities that touch each other.
-// The number is how many km of border they share.
-// We measured these from the real map.
+// representation lang natin dito is cities as nodes + their border sharing values
+// the numbers are just the length of border they share, holy google
 // ============================================================
 
 var BORDERS = [
