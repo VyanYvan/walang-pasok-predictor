@@ -1,8 +1,7 @@
 // ============================================================
 // 3. LOGICAL REPRESENTATION
-// Logic = statements that are either TRUE or FALSE.
-// FACTS are things we know right now, like "Manila has Signal 2".
-// Each small function below is one logical statement.
+// puro true or false statements basically
+// gathers the facts and describes them with T or F or dichotomous identifier
 // ============================================================
 
 // Is this level Kinder to Grade 12? (basic education)
