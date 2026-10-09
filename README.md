@@ -46,8 +46,8 @@ The points (P rules) and the 70/40 cutoffs are our own idea, not official.
 
 ## Team
 
-- [Member 1]
-- [Member 2]
-- [Member 3]
-- [Member 4]
-- [Member 5]
+- Arevalo, Miguel
+- Austria, Marcus
+- Billate, Rhown
+- Deuda, Carlo
+- Nour, Sabir
