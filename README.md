@@ -48,6 +48,6 @@ The points (P rules) and the 70/40 cutoffs are our own idea, not official.
 
 - Arevalo, Miguel
 - Austria, Marcus
-- Billate, Rhown
+- Billate, Rhown Leupert G.
 - Deuda, Carlo
 - Nour, Sabir
